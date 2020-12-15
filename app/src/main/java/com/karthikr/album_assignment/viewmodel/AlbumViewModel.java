@@ -27,5 +27,6 @@ public class AlbumViewModel extends AndroidViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
+        albumRepository.clear();
     }
 }

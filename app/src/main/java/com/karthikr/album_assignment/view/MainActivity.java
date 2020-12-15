@@ -1,7 +1,6 @@
 package com.karthikr.album_assignment.view;
 
 import android.content.Context;
-import android.graphics.Movie;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +16,6 @@ import com.karthikr.album_assignment.model.Album;
 import com.karthikr.album_assignment.viewmodel.AlbumViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private AlbumViewModel albumViewModel;

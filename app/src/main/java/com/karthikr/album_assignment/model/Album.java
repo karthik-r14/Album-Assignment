@@ -1,8 +1,13 @@
 package com.karthikr.album_assignment.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Album {
+    @SerializedName("userId")
     private Integer userId;
+    @SerializedName("id")
     private Integer id;
+    @SerializedName("title")
     private String title;
 
     public Album(Integer userId, Integer id, String title) {

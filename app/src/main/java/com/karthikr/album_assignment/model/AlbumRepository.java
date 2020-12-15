@@ -1,29 +1,63 @@
 package com.karthikr.album_assignment.model;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.karthikr.album_assignment.service.AlbumDataService;
+import com.karthikr.album_assignment.service.RetrofitInstance;
+
 import java.util.ArrayList;
-import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class AlbumRepository {
     private Application application;
     private MutableLiveData<ArrayList<Album>> albumsLiveData = new MutableLiveData<>();
-    private ArrayList<Album> albums;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private Observable<ArrayList<Album>> albumResponseObservable;
+    private ArrayList<Album> allAlbums;
 
     public AlbumRepository(Application application) {
         this.application = application;
     }
 
     public MutableLiveData<ArrayList<Album>> getAlbumsLiveData() {
-        albums = new ArrayList<>();
+        allAlbums = new ArrayList<>();
+        AlbumDataService albumService = RetrofitInstance.getService();
+        albumResponseObservable = albumService.getAlbumsWithRx();
 
-        albums.add(new Album(1, 1, "Album 1"));
-        albums.add(new Album(2, 2, "Album 2"));
+        Log.i("Album observable :", albumResponseObservable.toString());
 
-        albumsLiveData.postValue(albums);
+        compositeDisposable.add(albumResponseObservable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<ArrayList<Album>>() {
+                    @Override
+                    public void onNext(ArrayList<Album> albums) {
+                        allAlbums = albums;
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.i("Album Error :", e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        albumsLiveData.postValue(allAlbums);
+                    }
+                }));
 
         return albumsLiveData;
+    }
+
+    public void clear() {
+        compositeDisposable.clear();
     }
 }
