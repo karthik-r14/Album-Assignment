@@ -1,23 +1,19 @@
 package com.karthikr.album_assignment.viewmodel;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.karthikr.album_assignment.model.Album;
 import com.karthikr.album_assignment.model.AlbumRepository;
 
 import java.util.ArrayList;
 
-public class AlbumViewModel extends AndroidViewModel {
+public class AlbumViewModel extends ViewModel {
 
     private AlbumRepository albumRepository;
 
-    public AlbumViewModel(@NonNull Application application) {
-        super(application);
-        albumRepository = new AlbumRepository(application);
+    public AlbumViewModel(AlbumRepository albumRepository) {
+        this.albumRepository = albumRepository;
     }
 
     public LiveData<ArrayList<Album>> getAllAlbums() {

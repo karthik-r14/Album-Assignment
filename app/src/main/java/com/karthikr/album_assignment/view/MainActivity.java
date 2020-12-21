@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.karthikr.album_assignment.R;
 import com.karthikr.album_assignment.adapter.AlbumAdapter;
 import com.karthikr.album_assignment.databinding.ActivityMainBinding;
+import com.karthikr.album_assignment.factory.AlbumViewModelFactory;
 import com.karthikr.album_assignment.model.Album;
+import com.karthikr.album_assignment.model.AlbumRepository;
 import com.karthikr.album_assignment.viewmodel.AlbumViewModel;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private AlbumViewModel albumViewModel;
     private ActivityMainBinding binding;
+    private AlbumViewModelFactory albumViewModelFactory;
     private Context context;
 
     @Override
@@ -27,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        albumViewModel = ViewModelProviders.of(this).get(AlbumViewModel.class);
+        albumViewModelFactory = new AlbumViewModelFactory();
+        albumViewModel = ViewModelProviders.of(this, albumViewModelFactory).get(AlbumViewModel.class);
 
         init();
         observeAlbums();

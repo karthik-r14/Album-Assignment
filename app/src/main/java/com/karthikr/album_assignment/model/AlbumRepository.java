@@ -1,6 +1,5 @@
 package com.karthikr.album_assignment.model;
 
-import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -17,14 +16,12 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class AlbumRepository {
-    private Application application;
     private MutableLiveData<ArrayList<Album>> albumsLiveData = new MutableLiveData<>();
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private Observable<ArrayList<Album>> albumResponseObservable;
     private ArrayList<Album> allAlbums;
 
-    public AlbumRepository(Application application) {
-        this.application = application;
+    public AlbumRepository() {
     }
 
     public MutableLiveData<ArrayList<Album>> getAlbumsLiveData() {
