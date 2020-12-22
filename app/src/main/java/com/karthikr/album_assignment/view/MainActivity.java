@@ -14,7 +14,6 @@ import com.karthikr.album_assignment.adapter.AlbumAdapter;
 import com.karthikr.album_assignment.databinding.ActivityMainBinding;
 import com.karthikr.album_assignment.factory.AlbumViewModelFactory;
 import com.karthikr.album_assignment.model.Album;
-import com.karthikr.album_assignment.model.AlbumRepository;
 import com.karthikr.album_assignment.viewmodel.AlbumViewModel;
 
 import java.util.ArrayList;
